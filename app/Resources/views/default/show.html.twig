@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div style="border-top:1px black;padding-bottom:10px">
+    {{ music.name }}
+    <br>
+    <audio controls>
+        <source src="{{ app.request.getSchemeAndHttpHost() }}/{{music.webPath}}">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+{% endblock %}

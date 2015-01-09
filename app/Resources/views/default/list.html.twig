@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for music in musicList %}
+    <div style="border-top:1px black;padding-bottom:10px">
+        <a href="{{ url('app_default_show', { 'id': music.id }) }}">{{ music.name }}</a>
+    </div>
+{% endfor %}
+{% endblock %}
