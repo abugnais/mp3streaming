@@ -29,8 +29,7 @@ class Music
     public $path;
 
     /**
-     * @Assert\File(maxSize="900000000000")
-     * @Assert\File(mimeTypes="audio/mpeg")
+     * @Assert\File(maxSize="900000000000", mimeTypes="audio/mpeg")
      */
     private $file;
 
@@ -81,6 +80,23 @@ class Music
     }
 
     /**
+     * Gets name
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Sets name
+     *
+     * @param string $name
+     */
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
@@ -88,7 +104,7 @@ class Music
         if(null === $this->getFile()) return;
 
         $filename = sha1(uniqid(mt_rand(), true));
-        $this->path = $filename.'.'.$this->getFile()->guessExtension();
+        $this->path = $filename.'.'.$this->file->guessExtension();
         if(null === $this->name) {
             $this->name = $this->getFile()->getClientOriginalName();
         }
@@ -101,7 +117,7 @@ class Music
     public function upload() {
         if(null === $this->getFile()) return;
 
-        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+        $this->file->move($this->getUploadRootDir(), $this->path);
         if(isset($this->temp)) {
             unlink($this->getUploadRootDir().'/'.$this->temp);
             $this->temp = null;
